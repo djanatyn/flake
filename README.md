@@ -1,0 +1,3 @@
+# djanatyn/flake
+
+nix flakes ❄️
