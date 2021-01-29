@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, nixpkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../cachix.nix
