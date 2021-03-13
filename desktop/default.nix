@@ -50,6 +50,10 @@
   };
 
   boot = with pkgs; {
+    extraModprobeConfig = ''
+      options gvusb2_sound index=3
+    '';
+
     loader = {
       grub = {
         enable = true;
