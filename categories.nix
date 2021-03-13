@@ -22,6 +22,9 @@ with pkgs; {
 
     # conversions
     fend
+
+    # management
+    home-manager
   ];
 
   network = [
@@ -74,7 +77,7 @@ with pkgs; {
     niv
 
     # searching
-    manix
+    nix-doc
 
     # caching
     cachix
