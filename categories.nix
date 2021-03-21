@@ -331,6 +331,9 @@ with pkgs; {
 
     # quake
     quakespasm
+
+    # super smash bros melee
+    slippi-netplay
   ];
 
   java = [
