@@ -23,8 +23,12 @@ with pkgs; {
     # conversions
     fend
 
+    # checking scripts
+    shellcheck
+
     # management
     home-manager
+    pueue
   ];
 
   network = [
@@ -32,9 +36,16 @@ with pkgs; {
     dnsutils
     whois
 
+    # see connections
+    nethogs
+    bandwhich
+
     # tls
     openssl
     gnutls
+
+    # downloads
+    qbittorrent
   ];
 
   terminal = [
@@ -63,6 +74,9 @@ with pkgs; {
   nix = [
     # check hashes
     nix-prefetch-scripts
+
+    # packaging
+    python38Packages.python-slugify
 
     # format code
     nixfmt
@@ -141,6 +155,10 @@ with pkgs; {
     # chat clients
     discord
     spectral
+    kotatogram-desktop
+
+    # twitch
+    chatterino2
   ];
 
   virtualisation = [
@@ -268,6 +286,7 @@ with pkgs; {
     # compression!
     unrar
     unzip
+    p7zip
     zip
   ];
 
@@ -293,12 +312,31 @@ with pkgs; {
     # git large files
     git-lfs
 
+    # cli tools
+    tig
+    gitui
+
     # github
     gist
-    hub
+    gh
 
     # trimming
     git-trim
+  ];
+
+  doom = [
+    # engines
+    crispyDoom
+    zdoom
+    gzdoom
+    prboom
+    zandronum
+
+    # finding wads
+    doomseeker
+
+    # level editing
+    slade
   ];
 
   games = if (pkgs.stdenv.system == "x86_64-darwin") then
@@ -308,13 +346,12 @@ with pkgs; {
     ]
   else [
     # steam + lutris
-    wine
+    wine wineWowPackages.stable
     steam
+    steam-run
     lutris
 
     # melee
-    # slippi.playback
-    # slippi.netplay
     wiimms-iso-tools
 
     # emulation
@@ -326,11 +363,11 @@ with pkgs; {
     # puzzles
     sgtpuzzles
 
-    # doom
-    gzdoom
-
     # quake
     quakespasm
+
+    # runescape
+    runelite
 
     # super smash bros melee
     slippi-netplay
@@ -352,6 +389,7 @@ with pkgs; {
     wmctrl
     rofi
     arandr
+    xdotool
 
     # style
     nitrogen
@@ -370,17 +408,18 @@ with pkgs; {
   ];
 
   voidheart = [
-    # podcasts stay here
-    # podcast
-
-    # keyboard is configured here
-    # qmk_firmware
+    # twitter
+    python38Packages.rainbowstream
 
     # music managements
     beets
 
     # backups
     backblaze-b2
+
+    # firmware flashing
+    gcc-arm-embedded
+    dfu-util
   ];
 
   hashicorp = [
