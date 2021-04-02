@@ -8,7 +8,7 @@
     };
 
     ssbm-nix = {
-      url = "github:djanatyn/ssbm-nix";
+      url = "github:djanatyn/ssbm-nix/e97b509b4b6167711b91d409448630d7e847e4f9";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -29,6 +29,7 @@
           ./desktop
           { nixpkgs = { inherit pkgs; }; }
           nix-ld.nixosModules.nix-ld
+          ssbm-nix.nixosModule
         ];
       };
     };
