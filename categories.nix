@@ -371,6 +371,7 @@ with pkgs; {
 
     # super smash bros melee
     slippi-netplay
+    crystal-melee
   ];
 
   java = [

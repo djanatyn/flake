@@ -15,10 +15,18 @@
 
   description = "nix configuration for djanatyn";
   outputs = { self, nix-ld, ssbm-nix, nixpkgs }@inputs: {
+    overlay = final: prev: {
+      crystal-melee = final.writeScriptBin "crystal-melee" ''
+        #!${final.stdenv.shell}
+
+        exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-config
+      '';
+    };
+
     nixosConfigurations = {
       desktop = let
         pkgs = import nixpkgs {
-          overlays = [ ssbm-nix.overlay ];
+          overlays = [ self.overlay ssbm-nix.overlay ];
           config = {
             allowUnfree = true;
           };
