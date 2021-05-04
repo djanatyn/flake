@@ -4,6 +4,8 @@
     ../cachix.nix
   ];
 
+  ssbm.gcc.oc-kmod.enable = true;
+
   system.stateVersion = "19.09";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -70,7 +72,6 @@
     extraModulePackages = with linuxPackages_latest; [
       v4l2loopback
       gvusb2
-      gcadapter-oc-kmod
     ];
 
     kernelParams = [
@@ -240,6 +241,10 @@
       dataDir = "/home/djanatyn/syncthing";
       configDir = "/home/djanatyn/.config/syncthing";
       guiAddress = "0.0.0.0:8384";
+    };
+
+    influxdb = {
+      enable = true;
     };
 
     jellyfin.enable = true;

@@ -421,6 +421,9 @@ with pkgs; {
     # firmware flashing
     gcc-arm-embedded
     dfu-util
+
+    # vmware
+    vmware-horizon-client
   ];
 
   hashicorp = [
