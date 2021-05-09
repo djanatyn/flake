@@ -9,7 +9,7 @@
     };
 
     ssbm-nix = {
-      url = "github:djanatyn/ssbm-nix/e97b509b4b6167711b91d409448630d7e847e4f9";
+      url = "github:djanatyn/ssbm-nix/e13633fddb0a571fe24a05128bb8f5bd217bba92";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -20,7 +20,13 @@
       crystal-melee = final.writeScriptBin "crystal-melee" ''
         #!${final.stdenv.shell}
 
-        exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-config
+        exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-config "$@"
+      '';
+
+      crystal-melee-playback = final.writeScriptBin "crystal-melee-playback" ''
+        #!${final.stdenv.shell}
+
+        exec ${final.slippi-playback}/bin/slippi-playback -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-playback-config "$@"
       '';
     };
 

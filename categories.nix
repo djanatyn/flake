@@ -372,6 +372,7 @@ with pkgs; {
     # super smash bros melee
     slippi-netplay
     crystal-melee
+    crystal-melee-playback
   ];
 
   java = [
