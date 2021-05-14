@@ -3,6 +3,9 @@
     home.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:djanatyn/nixpkgs";
 
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-ld = {
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,7 +18,7 @@
   };
 
   description = "nix configuration for djanatyn";
-  outputs = { self, home, nix-ld, ssbm-nix, nixpkgs }@inputs: {
+  outputs = { self, home, nix-ld, ssbm-nix, nixpkgs, darwin }@inputs: {
     overlay = final: prev: {
       crystal-melee = final.writeScriptBin "crystal-melee" ''
         #!${final.stdenv.shell}
@@ -41,6 +44,19 @@
         };
       };
     };
+
+    darwinConfigurations = {
+      work = let
+        pkgs = import nixpkgs {
+          overlays = [ self.overlay ssbm-nix.overlay ];
+          config = { allowUnfree = true; };
+        };
+      in darwin.lib.darwinSystem {
+        modules = [ ./work ];
+      };
+    };
+
+    darwinPackages = self.darwinConfigurations.work.pkgs;
 
     nixosConfigurations = {
       desktop = let

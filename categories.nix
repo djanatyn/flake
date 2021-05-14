@@ -36,16 +36,9 @@ with pkgs; {
     dnsutils
     whois
 
-    # see connections
-    nethogs
-    bandwhich
-
     # tls
     openssl
     gnutls
-
-    # downloads
-    qbittorrent
   ];
 
   terminal = [
@@ -444,11 +437,6 @@ with pkgs; {
   ];
 
   organization = [
-    # task warrior + shell
-    taskwarrior
-    tasksh
-    tasknc
-
     # timetracking
     wakatime
   ];
