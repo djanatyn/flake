@@ -29,6 +29,9 @@ with pkgs; {
     # management
     home-manager
     pueue
+
+    # graphics
+    graphviz
   ];
 
   network = [
