@@ -98,7 +98,7 @@ with pkgs; {
     gnupg
 
     # managing passwords
-    pass
+    (pass.withExtensions(ext: with ext; [ pass-import pass-otp ]))
 
     # generating passwords
     pwgen
