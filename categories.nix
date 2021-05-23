@@ -127,7 +127,11 @@ with pkgs; {
   ];
 
   haskell = [
-    # curated package collection
+    # haskell setup
+    haskellPackages.cabal-install
+    ghc
+
+    # keep stack around
     stack
 
     # best formatter :)
