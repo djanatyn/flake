@@ -373,6 +373,9 @@ with pkgs; {
     slippi-netplay
     crystal-melee
     crystal-melee-playback
+
+    # go
+    qgo
   ];
 
   java = [
