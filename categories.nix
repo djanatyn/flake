@@ -409,6 +409,9 @@ with pkgs; {
   ];
 
   voidheart = [
+    # searching youtube
+    ueberzug
+
     # twitter
     python38Packages.rainbowstream
 
