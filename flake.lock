@@ -20,24 +20,6 @@
         "type": "github"
       }
     },
-    "home": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1619162713,
-        "narHash": "sha256-JeTL/D/fW7ja2UbvmR9wqXaHlbM5UmooNEnRxo++qKo=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "e00dd0d7d2565a9d79c3826b088bef039624382e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -57,7 +39,7 @@
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1609520816,
@@ -95,20 +77,6 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1611695839,
-        "narHash": "sha256-Jn/eHg22ncOhmIomK6eMK0WFqKEXP7nLlJptMVlhC3k=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "5f472181f24ca81048e77fef9e135b1fc73e58e6",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
         "lastModified": 1616710392,
         "narHash": "sha256-+gFN0kWV9xC7ckGCSfpom+U4syvklMPNCmwOSAkokcM=",
         "owner": "djanatyn",
@@ -122,7 +90,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1602702596,
         "narHash": "sha256-fqJ4UgOb4ZUnCDIapDb4gCrtAah5Rnr2/At3IzMitig=",
@@ -137,7 +105,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1611413872,
         "narHash": "sha256-nD9e3f9P+YQ1qDSHdRXIAor40eqANBv1o03zGvpJsnM=",
@@ -156,9 +124,8 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
-        "home": "home",
         "nix-ld": "nix-ld",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "ssbm-nix": "ssbm-nix"
       }
     },
@@ -181,21 +148,21 @@
     "ssbm-nix": {
       "inputs": {
         "nix": "nix",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "slippi-desktop": "slippi-desktop"
       },
       "locked": {
-        "lastModified": 1620015599,
-        "narHash": "sha256-JScjBhqW7p15cyg7h+LUb6UUy2uCX+T3huDewetjo5o=",
+        "lastModified": 1621470735,
+        "narHash": "sha256-E0VwqJ4qzZUBJjYZLF3zzvEo5PYLYJsp3DPjW9sokOE=",
         "owner": "djanatyn",
         "repo": "ssbm-nix",
-        "rev": "e13633fddb0a571fe24a05128bb8f5bd217bba92",
+        "rev": "3896cac81722975dbbc1e6ba0e2904e2fe1b48b4",
         "type": "github"
       },
       "original": {
         "owner": "djanatyn",
         "repo": "ssbm-nix",
-        "rev": "e13633fddb0a571fe24a05128bb8f5bd217bba92",
+        "rev": "3896cac81722975dbbc1e6ba0e2904e2fe1b48b4",
         "type": "github"
       }
     },

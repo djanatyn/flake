@@ -1,6 +1,5 @@
 {
   inputs = {
-    home.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:djanatyn/nixpkgs";
 
     darwin.url = "github:lnl7/nix-darwin";
@@ -13,12 +12,11 @@
 
     ssbm-nix = {
       url = "github:djanatyn/ssbm-nix/3896cac81722975dbbc1e6ba0e2904e2fe1b48b4";
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   description = "nix configuration for djanatyn";
-  outputs = { self, home, nix-ld, ssbm-nix, nixpkgs, darwin }@inputs: {
+  outputs = { self, nix-ld, ssbm-nix, nixpkgs, darwin }@inputs: {
     overlay = final: prev: {
       crystal-melee = final.writeScriptBin "crystal-melee" ''
         #!${final.stdenv.shell}
@@ -31,18 +29,6 @@
 
         exec ${final.slippi-playback}/bin/slippi-playback -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-playback-config "$@"
       '';
-    };
-
-    homeConfigurations = {
-      djanatyn = home.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
-        homeDirectory = "/home/djanatyn";
-        username = "djanatyn";
-        configuration = { config, pkgs, ... }: {
-          # home.stateVersion = "21.05";
-          # programs.home-manager.enable = true;
-        };
-      };
     };
 
     darwinConfigurations = {
