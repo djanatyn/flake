@@ -8,6 +8,10 @@ with pkgs; {
     binutils
     moreutils
     pueue
+    broot
+
+    # downloading
+    aria2
 
     # classics get an upgrade
     htop
@@ -35,6 +39,9 @@ with pkgs; {
 
     # dotfiles
     stow
+
+    # graphics
+    graphviz
   ];
 
   network = [
@@ -416,6 +423,11 @@ with pkgs; {
   ];
 
   voidheart = [
+    # graphic editing
+    mtpaint
+    krita
+    grafx2
+
     # searching youtube
     ueberzug
 
