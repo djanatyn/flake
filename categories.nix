@@ -45,8 +45,11 @@ with pkgs; {
   ];
 
   network = [
-    # dns
+    # dig
     dnsutils
+    # dog
+    dogdns
+
     whois
 
     # tls
