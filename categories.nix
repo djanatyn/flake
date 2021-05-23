@@ -377,6 +377,9 @@ with pkgs; {
   ];
 
   streaming = [
+    # for recording
+    vokoscreen
+
     # for twitch
     obs-studio
     screenkey
