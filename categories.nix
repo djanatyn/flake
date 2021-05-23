@@ -32,6 +32,9 @@ with pkgs; {
 
     # graphics
     graphviz
+
+    # dotfiles
+    stow
   ];
 
   network = [
@@ -79,9 +82,6 @@ with pkgs; {
 
     # build binaries
     patchelf
-
-    # home-manager!
-    home-manager
 
     # version management
     niv
