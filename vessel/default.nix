@@ -1,7 +1,7 @@
 { config, pkgs, nixpkgs, ... }:
 {
   imports = [
-    "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
+    # "${nixpkgs}/nixos/modules/profiles/qemu-guest.nix"
     # <modules/srht-ci>
     # <modules/monitoring>
     # <modules/pri>
@@ -10,8 +10,6 @@
 
   # system state is from 18.08
   system.stateVersion = "18.08";
-
-  srht-ci.enable = true;
 
   # user account
   users = {
@@ -103,33 +101,12 @@
       guiAddress = "10.100.0.1:8384";
     };
 
-    factorio = {
-      enable = true;
-      password = lib.fileContents /var/src/secrets/factorio/password;
-    };
-
-    postgresql = {
-      enable = true;
-      package = postgresql_10;
-      ensureDatabases = [ "root" "sourcehut" ];
-      ensureUsers = [{
-        name = "root";
-        ensurePermissions = { "DATABASE root" = "ALL PRIVILEGES"; };
-      }];
-    };
-
-    terraria = {
-      enable = true;
-      password = lib.fileContents /var/src/secrets/terraria-password;
-    };
-
     openssh = {
       enable = true;
       ports = [ 8888 ];
     };
 
     fail2ban.enable = true;
-    flowercluster.monitoring.enable = true;
   };
 
   nixpkgs.config = { allowUnfree = true; };
