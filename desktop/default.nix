@@ -71,7 +71,7 @@
 
     extraModulePackages = with linuxPackages_latest; [
       v4l2loopback
-      gvusb2
+      # gvusb2 # https://github.com/NixOS/nixpkgs/pull/109560
     ];
 
     kernelParams = [

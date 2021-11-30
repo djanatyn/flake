@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:djanatyn/nixpkgs";
+    nixpkgs.url = "nixpkgs";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -11,7 +11,7 @@
     };
 
     ssbm-nix = {
-      url = "github:djanatyn/ssbm-nix/3896cac81722975dbbc1e6ba0e2904e2fe1b48b4";
+      url = "github:djanatyn/ssbm-nix/8ec53a5a1c02c48e3b5b52a1abd530d22e194fd7";
     };
   };
 
@@ -24,11 +24,11 @@
         exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-config "$@"
       '';
 
-      crystal-melee-playback = final.writeScriptBin "crystal-melee-playback" ''
-        #!${final.stdenv.shell}
-
-        exec ${final.slippi-playback}/bin/slippi-playback -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-playback-config "$@"
-      '';
+      p-plus = final.appimageTools.wrapAppImage {
+        src = /home/djanatyn/p-plus/Faster_Project_Plus-x86-64.AppImage;
+        name = "p-plus";
+        extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp ];
+      };
     };
 
     darwinConfigurations = {
@@ -37,26 +37,33 @@
           overlays = [ self.overlay ssbm-nix.overlay ];
           config = { allowUnfree = true; };
         };
-      in darwin.lib.darwinSystem {
-        modules = [ ./work ];
-      };
+      in darwin.lib.darwinSystem { modules = [ ./work ]; };
     };
 
     darwinPackages = self.darwinConfigurations.work.pkgs;
 
-    nixosConfigurations = {
-      desktop = let
-        pkgs = import nixpkgs {
-          overlays = [ self.overlay ssbm-nix.overlay ];
-          config = { allowUnfree = true; };
-        };
-      in nixpkgs.lib.nixosSystem {
+    nixosConfigurations = let
+      pkgs = import nixpkgs {
+        overlays = [ self.overlay ssbm-nix.overlay ];
+        config = { allowUnfree = true; };
+      };
+    in {
+      desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./desktop
           { nixpkgs = { inherit pkgs; }; }
           nix-ld.nixosModules.nix-ld
           ssbm-nix.nixosModule
+        ];
+      };
+
+      vessel = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./vessel
+          { nixpkgs = { inherit pkgs; }; }
+          nix-ld.nixosModules.nix-ld
         ];
       };
     };

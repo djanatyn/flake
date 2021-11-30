@@ -258,7 +258,7 @@ with pkgs; {
     tmux
 
     # declarative session manager
-    tmuxp
+    # tmuxp
   ];
 
   development = [
@@ -279,6 +279,9 @@ with pkgs; {
     # debug
     hexyl
     gdb
+
+    # nim
+    nim
 
     # showing off
     glow
@@ -356,8 +359,8 @@ with pkgs; {
     ]
   else [
     # steam + lutris
-    wine wineWowPackages.stable
-    steam
+    wine
+    (steam.override { extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ]; })
     steam-run
     lutris
 
@@ -381,8 +384,9 @@ with pkgs; {
 
     # super smash bros melee
     slippi-netplay
+    slippi-playback
     crystal-melee
-    crystal-melee-playback
+    p-plus
 
     # go
     qgo
