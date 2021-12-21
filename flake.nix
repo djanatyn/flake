@@ -18,10 +18,10 @@
   description = "nix configuration for djanatyn";
   outputs = { self, nix-ld, ssbm-nix, nixpkgs, darwin }@inputs: {
     overlay = final: prev: {
-      crystal-melee = final.writeScriptBin "crystal-melee" ''
+      netplay2021 = final.writeScriptBin "netplay2021" ''
         #!${final.stdenv.shell}
 
-        exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/diet-melee/DietMeleeLinuxPatcher/CrystalMelee_v1.0.1.iso -u ~/slippi-config "$@"
+        exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/netplay2021.iso -u ~/slippi-config "$@"
       '';
 
       p-plus = final.appimageTools.wrapAppImage {

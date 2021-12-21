@@ -385,7 +385,7 @@ with pkgs; {
     # super smash bros melee
     slippi-netplay
     slippi-playback
-    crystal-melee
+    netplay2021
     p-plus
 
     # go
