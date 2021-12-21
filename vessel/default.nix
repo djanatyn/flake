@@ -44,12 +44,6 @@
     nameservers = [ "8.8.8.8" ];
     defaultGateway = "167.114.113.1";
 
-    nat = {
-      enable = true;
-      externalInterface = "ens3";
-      internalInterfaces = [ "wg0" ];
-    };
-
     wireguard.interfaces = {
       wg0 = {
         ips = [ "10.100.0.1/24" ];
@@ -75,19 +69,43 @@
       };
     };
 
-    interfaces."ens3".ipv4.addresses = [{
-      address = "167.114.113.126";
-      prefixLength = 24;
-    }];
+    interfaces."ens3" = {
+      ipv4.addresses = [{
+        address = "167.114.113.126";
+        prefixLength = 24;
+      }];
+    };
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 8888 7777 51820 8080 8384 ];
-      allowedUDPPorts = [ 7777 51820 8080 ];
+
+      checkReversePath = false;
+
+      allowedTCPPorts = [ 1234 8888 7777 51820 8080 8384 ];
+      allowedUDPPorts = [ 1234 7777 51820 8080 ];
     };
   };
 
   services = {
+    minecraft-server = {
+      enable = true;
+      eula = true;
+      declarative = true;
+      openFirewall = true;
+
+      serverProperties = {
+        server-ip = "0.0.0.0";
+        server-port = 1234;
+        gamemode = "survival";
+        motd = "welcome to howcordtown";
+        max-players = 8;
+        enable-rcon = true;
+        level-seed = "howcord";
+      };
+
+      jvmOpts = "-Xmx2048M -Xms2048M -Djava.net.preferIPv4Stack=true -Dlog4j2.formatMsgNoLookups=true";
+    };
+
     miniflux = {
       enable = true;
       config = { "LISTEN_ADDR" = "10.100.0.1:8080"; };

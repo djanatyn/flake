@@ -29,6 +29,15 @@
         name = "p-plus";
         extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp ];
       };
+
+      minecraft-server = prev.minecraft-server.overrideAttrs (old: rec {
+        version = "1.18";
+
+        src = prev.fetchurl {
+          url = "https://launcher.mojang.com/v1/objects/3cf24a8694aca6267883b17d934efacc5e44440d/server.jar";
+          sha1 = "1m248pncz9796zdihdw2d9mcjj34mwiw";
+        };
+      });
     };
 
     darwinConfigurations = {
@@ -50,6 +59,7 @@
     in {
       desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+
         modules = [
           ./desktop
           { nixpkgs = { inherit pkgs; }; }
