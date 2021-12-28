@@ -24,11 +24,18 @@
         exec ${final.slippi-netplay}/bin/slippi-netplay -e ~/melee/netplay2021.iso -u ~/slippi-config "$@"
       '';
 
-      p-plus = final.appimageTools.wrapAppImage {
+      appimage-p-plus = final.appimageTools.wrapAppImage {
         src = /home/djanatyn/p-plus/Faster_Project_Plus-x86-64.AppImage;
-        name = "p-plus";
-        extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp ];
+        name = "appimage-p-plus";
+        extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp vulkan-loader mesa_drivers mesa_glu mesa ];
       };
+
+      p-plus = final.writeScriptBin "p-plus" ''
+        #!${final.stdenv.shell}
+
+        cd ~/p-plus
+        exec ${final.appimage-p-plus}/bin/appimage-p-plus ~/p-plus/Faster_Project_Plus-x86-64.AppImage "$@"
+      '';
 
       minecraft-server = prev.minecraft-server.overrideAttrs (old: rec {
         version = "1.18";

@@ -386,6 +386,7 @@ with pkgs; {
     slippi-netplay
     slippi-playback
     netplay2021
+    appimage-p-plus
     p-plus
 
     # go
