@@ -9,6 +9,7 @@ with pkgs; {
     moreutils
     pueue
     broot
+    epr
 
     # downloading
     aria2
@@ -262,6 +263,10 @@ with pkgs; {
   ];
 
   development = [
+    # rust
+    rustup
+    rust-analyzer
+
     # run things
     entr
 
@@ -284,9 +289,13 @@ with pkgs; {
     nim
 
     # showing off
-    glow
     silicon
     asciinema
+
+    # databases
+    sqlite
+    sqldiff
+    visidata
   ];
 
   hacking = [
@@ -358,8 +367,12 @@ with pkgs; {
       tome2
     ]
   else [
+    # morrowind
+    openmw
+
     # steam + lutris
     wine
+    wine64
     (steam.override { extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ]; })
     steam-run
     lutris
@@ -451,9 +464,6 @@ with pkgs; {
     # firmware flashing
     gcc-arm-embedded
     dfu-util
-
-    # vmware
-    vmware-horizon-client
   ];
 
   hashicorp = [
