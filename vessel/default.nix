@@ -26,7 +26,14 @@
           "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIOiCqSWnlyk3Efun+zeqeR9afQ3gwYV0QF2l9Us15F8BnNkEqZMvVYQipZUJKwyV4P8X7yJP+2G/KGVhW5kG+4= flowercluster"
         ];
       };
+      penny = {
+	description = "system account for Discord-Red";
+	isSystemUser = true;
+	group = "penny";
+      };
     };
+
+    groups.penny = {};
 
     # elegy for hallownest
     motd = ''
@@ -83,6 +90,20 @@
 
       allowedTCPPorts = [ 1234 8888 7777 51820 8080 8384 ];
       allowedUDPPorts = [ 1234 7777 51820 8080 ];
+    };
+  };
+
+  systemd.services = {
+    "penny-redbot" = {
+      path = with pkgs; [ python3 jdk11_headless ];
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+
+      serviceConfig = {
+	ExecStart = "/home/djanatyn/.discordred/bin/redbot penny";
+	User = "djanatyn";
+	Restart = "always";
+      };
     };
   };
 
