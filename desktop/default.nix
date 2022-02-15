@@ -12,7 +12,7 @@
   time.timeZone = "America/New_York";
 
   nix = {
-    useSandbox = true;
+    settings.sandbox = true;
     optimise.automatic = true;
     gc.automatic = true;
     package = pkgs.nixFlakes;
@@ -63,7 +63,7 @@
         device = "nodev";
       };
       efi.efiSysMountPoint = "/boot";
-      systemd-boot.enable = true;
+      # systemd-boot.enable = true;
     };
 
     kernelPackages = linuxPackages_latest;

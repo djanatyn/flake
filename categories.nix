@@ -97,9 +97,6 @@ with pkgs; {
     # version management
     niv
 
-    # searching
-    nix-doc
-
     # caching
     cachix
   ];
@@ -384,7 +381,7 @@ with pkgs; {
     retroarch
 
     # minecraft
-    multimc
+    polymc
 
     # puzzles
     sgtpuzzles

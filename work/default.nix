@@ -11,7 +11,7 @@
     package = pkgs.nixFlakes;
     trustedBinaryCaches =
       [ "https://cache.nixos.org" "https://all-hies.cachix.org" ];
-    useSandbox = true;
+    settings.sandbox = true;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
