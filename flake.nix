@@ -11,7 +11,7 @@
     };
 
     ssbm-nix = {
-      url = "github:djanatyn/ssbm-nix/cef31374b4dad79f98cea7a862319ea5855033a5";
+      url = "github:djanatyn/ssbm-nix/1165c94ec029cef644a4d1a92fd391ce030c90f9";
     };
   };
 

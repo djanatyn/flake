@@ -160,6 +160,11 @@
     virtualbox.host.enable = false;
   };
 
+  services.minidlna = {
+    enable = true;
+    mediaDirs = [ "/media" ];
+  };
+
   services.tailscale.enable = true;
 
   # enable grafana with default settings
