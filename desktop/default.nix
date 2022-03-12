@@ -160,6 +160,8 @@
     virtualbox.host.enable = false;
   };
 
+  services.tailscale.enable = true;
+
   # enable grafana with default settings
   services.grafana.enable = true;
 

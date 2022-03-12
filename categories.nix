@@ -2,6 +2,7 @@
 with pkgs; {
   system = [
     # tools you can't live without
+    btop
     rsync
     which
     file
@@ -9,6 +10,8 @@ with pkgs; {
     moreutils
     pueue
     broot
+    epr
+    visidata
     epr
 
     # downloading
@@ -243,8 +246,7 @@ with pkgs; {
     # searching
     ddgr
 
-    # not everything works in firefox
-    chromium
+    # chromium
 
     # native extensions
     brotab
@@ -378,6 +380,7 @@ with pkgs; {
     wiimms-iso-tools
 
     # emulation
+    fceux
     retroarch
 
     # minecraft
@@ -461,6 +464,9 @@ with pkgs; {
     # firmware flashing
     gcc-arm-embedded
     dfu-util
+
+    # desktop
+    xwinwrap
   ];
 
   hashicorp = [
@@ -482,6 +488,9 @@ with pkgs; {
   organization = [
     # timetracking
     wakatime
+
+    # document archival
+    wkhtmltopdf
   ];
 
   python = [
