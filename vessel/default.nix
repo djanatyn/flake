@@ -108,6 +108,7 @@
   };
 
   services = {
+    tailscale.enable = true;
     minecraft-server = {
       enable = true;
       eula = true;
@@ -129,8 +130,12 @@
 
     miniflux = {
       enable = true;
-      config = { "LISTEN_ADDR" = "10.100.0.1:8080"; };
+      adminCredentialsFile = "/run/keys/minifluxAdmin";
+      config = { "LISTEN_ADDR" = "100.113.153.78:8080"; };
     };
+
+    postgresql.package = pkgs.postgresql_12;
+    postgresql.dataDir = "/var/lib/postgresql/12";
 
     syncthing = {
       enable = true;
@@ -151,7 +156,16 @@
   nixpkgs.config = { allowUnfree = true; };
 
   virtualisation.docker.enable = true;
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo = {
+    wheelNeedsPassword = false;
+    extraRules = [{ 
+      users = ["djanatyn"];
+      commands = [{
+        command = "/run/current-system/sw/bin/systemctl restart penny-redbot";
+        options = [ "NOPASSWD" ];
+      }];
+    }];
+  };
 
   environment.systemPackages = with pkgs; [
     zsh
@@ -182,4 +196,5 @@
     version = 2;
     device = "/dev/sda";
   };
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
