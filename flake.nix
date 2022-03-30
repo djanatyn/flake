@@ -13,10 +13,14 @@
     ssbm-nix = {
       url = "github:djanatyn/ssbm-nix/1165c94ec029cef644a4d1a92fd391ce030c90f9";
     };
+
+    emacs = {
+      url = "github:nix-community/emacs-overlay";
+    };
   };
 
   description = "nix configuration for djanatyn";
-  outputs = { self, nix-ld, ssbm-nix, nixpkgs, darwin }@inputs: {
+  outputs = { self, nix-ld, ssbm-nix, emacs, nixpkgs, darwin }@inputs: {
     overlay = final: prev: {
       netplay2021 = final.writeScriptBin "netplay2021" ''
         #!${final.stdenv.shell}
@@ -50,7 +54,7 @@
     darwinConfigurations = {
       work = let
         pkgs = import nixpkgs {
-          overlays = [ self.overlay ssbm-nix.overlay ];
+          overlays = [ self.overlay ssbm-nix.overlay emacs.overlay ];
           config = { allowUnfree = true; };
         };
       in darwin.lib.darwinSystem { modules = [ ./work ]; };
@@ -60,7 +64,7 @@
 
     nixosConfigurations = let
       pkgs = import nixpkgs {
-        overlays = [ self.overlay ssbm-nix.overlay ];
+        overlays = [ self.overlay ssbm-nix.overlay emacs.overlay ];
         config = { allowUnfree = true; };
       };
     in {

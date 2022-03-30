@@ -208,7 +208,7 @@ with pkgs; {
 
   editor = [
     # emacs + tmux is powerful
-    emacs27
+    emacsGit
 
     # best of both worlds
     neovim
