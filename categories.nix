@@ -4,6 +4,7 @@ with pkgs; {
     # tools you can't live without
     btop
     rsync
+    rclone
     which
     file
     binutils
@@ -21,6 +22,7 @@ with pkgs; {
     htop
     glances
     bat
+    mdcat
     procs
     exa
 
@@ -236,6 +238,8 @@ with pkgs; {
 
   browser = [
     firefox
+    chromium
+    qutebrowser
 
     # bookmarks!
     pinboard
@@ -265,6 +269,22 @@ with pkgs; {
     # rust
     rustup
     rust-analyzer
+    rusty-man
+
+    # lua
+    fennel
+
+    # lisp
+    racket
+
+    # julia
+    julia_17-bin
+
+    # jacinda
+    jacinda
+
+    # prolog
+    swiProlog
 
     # run things
     entr
@@ -315,7 +335,7 @@ with pkgs; {
     # typed programmable config
     dhall
     dhall-bash
-    # dhall-json
+    dhall-json
   ];
 
   git = with gitAndTools; [
@@ -452,8 +472,9 @@ with pkgs; {
     # searching youtube
     ueberzug
 
-    # twitter
+    # twitter + mastodon
     python38Packages.rainbowstream
+    toot
 
     # music managements
     beets
