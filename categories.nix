@@ -276,6 +276,7 @@ with pkgs; {
 
     # lisp
     racket
+    sbcl
 
     # julia
     julia_17-bin
