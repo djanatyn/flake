@@ -2,6 +2,8 @@
 with pkgs; {
   system = [
     # tools you can't live without
+    man-pages
+    man-pages-posix
     btop
     rsync
     rclone
