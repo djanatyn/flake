@@ -122,6 +122,20 @@
   systemd = {
     coredump.enable = true;
     globalEnvironment = { RADV_PERFTEST = "aco"; };
+    services = {
+      fetch-followers = {
+        path = with pkgs; [ bash fetch-followers ];
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/var/run/fetch-followers";
+          EnvironmentFile = "/var/run/fetch-followers/secrets";
+        };
+
+        script = ''
+          fetch-followers
+        '';
+      };
+    };
   };
 
   networking = {
