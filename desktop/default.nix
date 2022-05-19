@@ -122,6 +122,7 @@
   systemd = {
     coredump.enable = true;
     globalEnvironment = { RADV_PERFTEST = "aco"; };
+
     services = {
       fetch-followers = {
         path = with pkgs; [ bash fetch-followers ];
@@ -134,6 +135,17 @@
         script = ''
           fetch-followers
         '';
+      };
+    };
+
+    timers = {
+      fetch-followers-timers = {
+        wantedBy = [ "timers.target" ];
+        partOf = [ "fetch-followers.service" ];
+        timerConfig = {
+          OnCalendar = "*-*-* 00:00:00";
+          Unit = "fetch-followers.service";
+        };
       };
     };
   };
