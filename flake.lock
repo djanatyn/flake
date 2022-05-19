@@ -35,6 +35,25 @@
         "type": "github"
       }
     },
+    "fetch-followers": {
+      "inputs": {
+        "mozilla": "mozilla",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1652961602,
+        "narHash": "sha256-F5Hp/rflTrEzUMNCeUf8pykbObDPfzunGjDaEjHYHhM=",
+        "owner": "djanatyn",
+        "repo": "fetch-followers",
+        "rev": "d40e7f7c3eca3ca19dbaf68403258341c2c1e986",
+        "type": "github"
+      },
+      "original": {
+        "owner": "djanatyn",
+        "repo": "fetch-followers",
+        "type": "github"
+      }
+    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -51,10 +70,25 @@
         "type": "github"
       }
     },
+    "mozilla": {
+      "locked": {
+        "lastModified": 1650459918,
+        "narHash": "sha256-sroCK+QJTmoXtcRkwZyKOP9iAYOPID2Bwdxn4GkG16w=",
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "rev": "e1f7540fc0a8b989fb8cf701dc4fd7fc76bcf168",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "type": "github"
+      }
+    },
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1609520816,
@@ -92,6 +126,20 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1650831523,
+        "narHash": "sha256-6pDZ08SAXsUx5rOP391x+TG39ENP/XA8VMa1tQvgEjc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "87d34a6b8982e901b8e50096b8e79ebc0e66cda0",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1646955661,
         "narHash": "sha256-AYLta1PubJnrkv15+7G+6ErW5m9NcI9wSdJ+n7pKAe0=",
         "owner": "NixOS",
@@ -104,7 +152,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1602702596,
         "narHash": "sha256-fqJ4UgOb4ZUnCDIapDb4gCrtAah5Rnr2/At3IzMitig=",
@@ -119,7 +167,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1611413872,
         "narHash": "sha256-nD9e3f9P+YQ1qDSHdRXIAor40eqANBv1o03zGvpJsnM=",
@@ -139,8 +187,9 @@
       "inputs": {
         "darwin": "darwin",
         "emacs": "emacs",
+        "fetch-followers": "fetch-followers",
         "nix-ld": "nix-ld",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "ssbm-nix": "ssbm-nix"
       }
     },
@@ -163,7 +212,7 @@
     "ssbm-nix": {
       "inputs": {
         "nix": "nix",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "slippi-desktop": "slippi-desktop"
       },
       "locked": {

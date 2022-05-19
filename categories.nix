@@ -467,6 +467,9 @@ with pkgs; {
   ];
 
   voidheart = [
+    # testing
+    fetch-followers
+
     # graphic editing
     mtpaint
     krita

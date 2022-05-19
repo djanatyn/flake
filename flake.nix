@@ -17,11 +17,17 @@
     emacs = {
       url = "github:nix-community/emacs-overlay";
     };
+
+    fetch-followers = {
+      url = "github:djanatyn/fetch-followers";
+    };
   };
 
   description = "nix configuration for djanatyn";
-  outputs = { self, nix-ld, ssbm-nix, emacs, nixpkgs, darwin }@inputs: {
+  outputs = { self, fetch-followers, nix-ld, ssbm-nix, emacs, nixpkgs, darwin }@inputs: {
     overlay = final: prev: {
+      fetch-followers = fetch-followers.packages.x86_64-linux.fetch-followers;
+
       netplay2021 = final.writeScriptBin "netplay2021" ''
         #!${final.stdenv.shell}
 
