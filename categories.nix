@@ -2,6 +2,7 @@
 with pkgs; {
   system = [
     # tools you can't live without
+    bubblewrap
     man-pages
     man-pages-posix
     btop
