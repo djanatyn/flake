@@ -128,8 +128,8 @@
         path = with pkgs; [ bash fetch-followers ];
         serviceConfig = {
           Type = "oneshot";
-          WorkingDirectory = "/var/run/fetch-followers";
-          EnvironmentFile = "/var/run/fetch-followers/secrets";
+          WorkingDirectory = "/var/db/fetch-followers";
+          EnvironmentFile = "/var/db/fetch-followers/secrets";
         };
 
         script = ''
