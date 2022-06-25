@@ -2,6 +2,7 @@
 with pkgs; {
   system = [
     # tools you can't live without
+    direnv
     bubblewrap
     man-pages
     man-pages-posix
