@@ -2,6 +2,8 @@
 with pkgs; {
   system = [
     # tools you can't live without
+    mdcat
+    duc
     direnv
     bubblewrap
     man-pages
@@ -68,6 +70,9 @@ with pkgs; {
   ];
 
   terminal = [
+    # kitty
+    kitty
+
     # urxvt
     rxvt_unicode
 
@@ -469,6 +474,9 @@ with pkgs; {
   ];
 
   voidheart = [
+    # communication
+    zoom-us
+
     # testing
     fetch-followers
 
@@ -530,6 +538,23 @@ with pkgs; {
     poetry
   ];
 
+
+  erlang = [
+      erlang
+  ];
+
+  zig = [
+      zig
+  ];
+
+  deno = [
+      deno
+  ];
+
+  ponylang = [
+      ponyc
+      pony-corral
+  ];
 
   gameboy = [
     # assembly

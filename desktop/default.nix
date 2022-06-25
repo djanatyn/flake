@@ -340,6 +340,10 @@
       java
       dhall
       python
+      erlang
+      zig
+      deno
+      ponylang
 
       # internet
       network
