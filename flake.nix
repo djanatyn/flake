@@ -57,17 +57,6 @@
       });
     };
 
-    darwinConfigurations = {
-      work = let
-        pkgs = import nixpkgs {
-          overlays = [ self.overlay ssbm-nix.overlay emacs.overlay ];
-          config = { allowUnfree = true; };
-        };
-      in darwin.lib.darwinSystem { modules = [ ./work ]; };
-    };
-
-    darwinPackages = self.darwinConfigurations.work.pkgs;
-
     nixosConfigurations = let
       pkgs = import nixpkgs {
         overlays = [ self.overlay ssbm-nix.overlay emacs.overlay ];
@@ -79,6 +68,17 @@
 
         modules = [
           ./desktop
+          { nixpkgs = { inherit pkgs; }; }
+          nix-ld.nixosModules.nix-ld
+          ssbm-nix.nixosModule
+        ];
+      };
+
+      work = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          ./work
           { nixpkgs = { inherit pkgs; }; }
           nix-ld.nixosModules.nix-ld
           ssbm-nix.nixosModule

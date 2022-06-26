@@ -349,6 +349,8 @@ with pkgs; {
   ];
 
   git = with gitAndTools; [
+    git
+
     # nicer diffs
     diff-so-fancy
     delta
@@ -523,9 +525,6 @@ with pkgs; {
   ];
 
   organization = [
-    # timetracking
-    wakatime
-
     # document archival
     wkhtmltopdf
   ];
