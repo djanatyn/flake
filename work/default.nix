@@ -74,6 +74,7 @@
   };
 
   networking = {
+    nameservers = [ "8.8.8.8" ];
     networkmanager.enable = true;
     networkmanager.dns = "systemd-resolved";
     hostName = "jon-metafy";
@@ -115,6 +116,7 @@
   services = {
     xserver = {
       enable = true;
+      synaptics.enable = true;
       layout = "us";
       xkbOptions = "ctrl:nocaps";
 
