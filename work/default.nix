@@ -39,8 +39,8 @@
   users.users.jstrickland = {
     isNormalUser = true;
     description = "Jonathan Strickland";
-        extraGroups =
-          [ "wheel" "networkmanager" "docker" "video" "audio" "adb" ];
+    extraGroups =
+      [ "wheel" "networkmanager" "docker" "video" "audio" "adb" ];
     packages = with pkgs; [];
     shell = "${pkgs.zsh}/bin/zsh";
   };
@@ -113,6 +113,8 @@
     }
   ];
 
+  services.resolved.fallbackDns = [ "8.8.8.8" ];
+
   services = {
     xserver = {
       enable = true;
@@ -123,11 +125,11 @@
       displayManager.defaultSession = "none+i3";
       windowManager.i3 = {
         enable = true;
-	      extraPackages = with pkgs; [
-		      dmenu
-			    i3status
-			    i3lock
-	      ];
+        extraPackages = with pkgs; [
+          dmenu
+          i3status
+          i3lock
+        ];
       };
     };
 
