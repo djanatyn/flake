@@ -398,6 +398,9 @@ with pkgs; {
       tome2
     ]
   else [
+    # heroes of might and magic
+    fheroes2
+
     # morrowind
     openmw
 
@@ -476,6 +479,9 @@ with pkgs; {
   ];
 
   voidheart = [
+    # ffxiv
+    xivlauncher
+
     # communication
     zoom-us
 
