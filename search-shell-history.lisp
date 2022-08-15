@@ -20,6 +20,6 @@
 (defun get-installed-packages ()
   (let* ((flake "github:djanatyn/flake")
          (packages (format nil "~a#nixosConfigurations.desktop.config.environment.systemPackages" flake)))
-    (run/s `(nix eval --impure --raw ,packages --apply "builtins.toString"))))
+    (str:split " " (run/s `(nix eval --impure --raw ,packages --apply "builtins.toString")))))
 
 (search-history "~/.zsh_history")
