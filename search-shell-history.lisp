@@ -25,4 +25,4 @@
 (let ((history (search-history "~/.zsh_history"))
       (installed (get-installed-packages)))
   (iter (for package in history)
-    (collect `(:package ,package :match ,(search package installed)))))
+    (if (not (search package installed)) (collect package))))
