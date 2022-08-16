@@ -22,7 +22,20 @@
          (packages (format nil "~a#nixosConfigurations.desktop.config.environment.systemPackages" flake)))
     (run/s `(nix eval --impure --raw ,packages --apply "builtins.toString"))))
 
-(let ((history (search-history "~/.zsh_history"))
-      (installed (get-installed-packages)))
-  (iter (for package in history)
-    (if (not (search package installed)) (collect package))))
+(defun find-uninstalled-packages ()
+  (let ((history (search-history "~/.zsh_history"))
+        (installed (get-installed-packages)))
+    (iter (for package in history)
+      (collect (make-instance 'queries
+                              :name package
+                              :match (not (null (search package installed))))))))
+
+(defclass queries ()
+  ((name :col-type :text)
+   (match :col-type :boolean))
+ (:metaclass mito:dao-table-class))
+
+(let ((mito:*connection* (dbi:connect-cached :sqlite3 :database-name #P"./packages-to-add.db"))
+      (queries (find-uninstalled-packages)))
+  (mito:ensure-table-exists 'queries)
+  (mapc #'mito:insert-dao queries))
