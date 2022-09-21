@@ -50,7 +50,7 @@
 
   networking = {
     hostName = "ramuh";
-    useDHCP = false;
+    useDHCP = true;
     # nameservers = [ "8.8.8.8" ];
     # defaultGateway = "142.4.203.1";
 
