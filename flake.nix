@@ -11,7 +11,7 @@
     };
 
     ssbm-nix = {
-      url = "github:djanatyn/ssbm-nix/1165c94ec029cef644a4d1a92fd391ce030c90f9";
+      url = "github:djanatyn/ssbm-nix/b546467d25f1f67064fbcc27ba27d75e7c949426";
     };
 
     emacs = {
@@ -89,6 +89,15 @@
         system = "x86_64-linux";
         modules = [
           ./vessel
+          { nixpkgs = { inherit pkgs; }; }
+          nix-ld.nixosModules.nix-ld
+        ];
+      };
+
+      ramuh = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./ramuh
           { nixpkgs = { inherit pkgs; }; }
           nix-ld.nixosModules.nix-ld
         ];
