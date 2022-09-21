@@ -90,7 +90,7 @@
 
     miniflux = {
       enable = true;
-      # adminCredentialsFile = "/run/keys/minifluxAdmin";
+      adminCredentialsFile = "/run/keys/minifluxAdmin";
       config = { "LISTEN_ADDR" = "0.0.0.0:8080"; };
     };
 
