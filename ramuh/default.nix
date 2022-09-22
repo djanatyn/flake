@@ -108,7 +108,8 @@
       ports = [ 8888 ];
     };
 
-    fail2ban.enable = true;
+    # fail2ban-server[16555]: ERROR: cannot import name 'MutableMapping' from 'collections'
+    fail2ban.enable = false;
   };
 
   nixpkgs.config = { allowUnfree = true; };
