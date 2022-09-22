@@ -66,7 +66,7 @@
 
       checkReversePath = false;
 
-      allowedTCPPorts = [ 1234 8888 7777 51820 8080 8384 ];
+      allowedTCPPorts = [ 1234 8888 7777 51820 8080 8384 80 443 ];
       allowedUDPPorts = [ 1234 7777 51820 8080 ];
     };
   };
@@ -91,7 +91,20 @@
     miniflux = {
       enable = true;
       adminCredentialsFile = "/run/keys/minifluxAdmin";
-      config = { "LISTEN_ADDR" = "0.0.0.0:8080"; };
+      config = { "LISTEN_ADDR" = "127.0.0.1:8080"; };
+    };
+
+    nginx.enable = true;
+    nginx.recommendedProxySettings = true;
+    nginx.recommendedTlsSettings = true;
+    nginx.defaultListenAddresses = ["100.107.2.72"];
+    nginx.virtualHosts."rss.djan.world" = {
+       onlySSL = true;
+       enableACME = true;
+       locations."/" = {
+         proxyPass = "http://127.0.0.1:8080";
+         proxyWebsockets = true;
+       };
     };
 
     # postgresql.package = pkgs.postgresql_12;
@@ -117,6 +130,8 @@
 
   virtualisation.docker.enable = true;
 
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "djanatyn@gmail.com";
   security.sudo = {
     wheelNeedsPassword = false;
     extraRules = [{ 
