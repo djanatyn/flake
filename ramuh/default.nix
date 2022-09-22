@@ -40,10 +40,12 @@
 
     # elegy for hallownest
     motd = ''
-      In wilds beyond they speak your name with reverence and regret,
-      For none could tame our savage souls yet you the challenge met,
-      Under palest watch, you taught, we changed, base instincts were redeemed,
-      A world you gave to bug and beast as they had never dreamed.
+     Lightning given sage form, venerated by the sylphs.
+
+     Though depicted in legend as a wise and benevolent elder who harbors
+     ancient secrets, Ramuh is a merciless arbiter of those who would defile the
+     sacred depths of the forest, striking down interlopers with fulminating
+     bolts of lightning.
     '';
   };
 
