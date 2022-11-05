@@ -134,6 +134,21 @@
           fetch-followers
         '';
       };
+
+      backup-notes = {
+        path = with pkgs; [ bash borgbackup coreutils ];
+        serviceConfig = {
+          Type = "oneshot";
+          WorkingDirectory = "/var/lib/backups";
+          LoadCredentialEncrypted = "borg-notes:/var/lib/backups/borg-notes.creds";
+        };
+
+        script = ''
+          BORG_PASSCOMMAND="systemd-creds cat borg-notes" borg create -v --stats \
+            "/home/djanatyn/backups/notes::$(date +%F-%T)" \
+            /home/djanatyn/org-roam
+        '';
+      };
     };
 
     timers = {
