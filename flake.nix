@@ -11,7 +11,7 @@
     };
 
     ssbm-nix = {
-      url = "github:djanatyn/ssbm-nix/b546467d25f1f67064fbcc27ba27d75e7c949426";
+      url = "github:djanatyn/ssbm-nix/update/nixpkgs-git";
     };
 
     emacs = {
@@ -37,7 +37,7 @@
       appimage-p-plus = final.appimageTools.wrapAppImage {
         src = /home/djanatyn/p-plus/Faster_Project_Plus-x86-64.AppImage;
         name = "appimage-p-plus";
-        extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp vulkan-loader mesa_drivers mesa_glu mesa ];
+        extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp vulkan-loader mesa.drivers mesa_glu mesa ];
       };
 
       p-plus = final.writeScriptBin "p-plus" ''

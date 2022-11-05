@@ -2,7 +2,7 @@
 with pkgs; {
   system = [
     # tools you can't live without
-    mdcat
+    bpftrace
     duc
     direnv
     bubblewrap
@@ -25,6 +25,7 @@ with pkgs; {
     aria2
 
     # classics get an upgrade
+    mdcat
     htop
     glances
     bat
@@ -67,6 +68,9 @@ with pkgs; {
     # tls
     openssl
     gnutls
+
+    # traffic
+    nethogs
   ];
 
   terminal = [
@@ -74,7 +78,7 @@ with pkgs; {
     kitty
 
     # urxvt
-    rxvt_unicode
+    rxvt-unicode-unwrapped
 
     # terminus font
     terminus_font
@@ -176,8 +180,7 @@ with pkgs; {
   chat = [
     # chat clients
     discord
-    spectral
-    kotatogram-desktop
+    neochat
 
     # twitch
     chatterino2
@@ -206,7 +209,7 @@ with pkgs; {
     # pulse + alsa utilities
     pavucontrol
     pulsemixer
-    alsaUtils
+    alsa-utils
   ];
 
   mail = [
@@ -247,8 +250,6 @@ with pkgs; {
 
   browser = [
     firefox
-    chromium
-    qutebrowser
 
     # bookmarks!
     pinboard
@@ -280,15 +281,19 @@ with pkgs; {
     rust-analyzer
     rusty-man
 
+    # raku
+    rakudo
+
     # lua
     fennel
+    lua
+
+    # elm
+    elmPackages.elm
 
     # lisp
     racket
     sbcl
-
-    # julia
-    julia_17-bin
 
     # jacinda
     jacinda
@@ -382,7 +387,7 @@ with pkgs; {
     crispyDoom
     zdoom
     gzdoom
-    prboom
+    prboom-plus
     zandronum
 
     # finding wads
@@ -432,7 +437,7 @@ with pkgs; {
 
     # super smash bros melee
     slippi-netplay
-    slippi-playback
+    # slippi-playback
     netplay2021
     appimage-p-plus
     p-plus
@@ -464,7 +469,7 @@ with pkgs; {
 
     # style
     nitrogen
-    compton
+    picom
     xmobar
 
     # screenshots
@@ -479,6 +484,9 @@ with pkgs; {
   ];
 
   voidheart = [
+    # video editing
+    kdenlive
+
     # ffxiv
     xivlauncher
 

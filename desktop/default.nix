@@ -1,8 +1,5 @@
 { config, pkgs, nixpkgs, ... }: {
-  imports = [
-    ./hardware-configuration.nix
-    ../cachix.nix
-  ];
+  imports = [ ./hardware-configuration.nix ../cachix.nix ];
 
   ssbm.gcc.oc-kmod.enable = true;
 
@@ -15,7 +12,6 @@
     settings.sandbox = true;
     optimise.automatic = true;
     gc.automatic = true;
-    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -69,10 +65,11 @@
     kernelPackages = linuxPackages_latest;
     kernelModules = [ "kvm-amd" "kvm" ];
 
-    extraModulePackages = with linuxPackages_latest; [
-      v4l2loopback
-      # gvusb2 # https://github.com/NixOS/nixpkgs/pull/109560
-    ];
+    extraModulePackages = with linuxPackages_latest;
+      [
+        v4l2loopback
+        # gvusb2 # https://github.com/NixOS/nixpkgs/pull/109560
+      ];
 
     kernelParams = [
       "amdgpu.noretry=0"
@@ -124,6 +121,7 @@
     globalEnvironment = { RADV_PERFTEST = "aco"; };
 
     services = {
+
       fetch-followers = {
         path = with pkgs; [ bash fetch-followers ];
         serviceConfig = {
@@ -156,8 +154,8 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 51820 8080 8096 ];
-      allowedUDPPorts = [ 51820 ];
+      allowedTCPPorts = [ 22 51820 8080 8096 9117 ];
+      allowedUDPPorts = [ 51820 1900 7359 ];
     };
 
     useDHCP = false;
@@ -186,12 +184,17 @@
     virtualbox.host.enable = false;
   };
 
-  services.minidlna = {
-    enable = true;
-    mediaDirs = [ "/media" ];
-  };
-
+  services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_14;
   services.tailscale.enable = true;
+
+  services.openssh = {
+    enable = true;
+    listenAddresses = [{
+      addr = "100.86.113.81";
+      port = 22;
+    }];
+  };
 
   # enable grafana with default settings
   services.grafana.enable = true;
@@ -235,11 +238,14 @@
     };
 
     openvpn.servers = {
-      expressvpn = { config = "config /root/nixos/openvpn/expressvpn.conf"; };
+      expressvpn = {
+        config = "config /root/nixos/openvpn/expressvpn.conf";
+        autoStart = false;
+      };
     };
 
     jackett = {
-      enable = false;
+      enable = true;
       package = pkgs.jackett;
     };
 
@@ -276,12 +282,9 @@
       guiAddress = "0.0.0.0:8384";
     };
 
-    influxdb = {
-      enable = true;
-    };
+    influxdb = { enable = true; };
 
     jellyfin.enable = true;
-    openssh.enable = true;
     lorri.enable = true;
     blueman.enable = true;
   };
@@ -304,7 +307,8 @@
     mediaKeys.enable = true;
   };
 
-  environment.systemPackages = with (import ../categories.nix { inherit pkgs; });
+  environment.systemPackages =
+    with (import ../categories.nix { inherit pkgs; });
     builtins.concatLists [
       # desktop NixOS box
       system
@@ -322,9 +326,12 @@
       # discovery
       search
 
-      # learning
+      # gaming
       games
       gameboy
+      doom
+
+      # learning
       study
 
       # trust

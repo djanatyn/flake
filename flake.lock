@@ -140,11 +140,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1655876541,
-        "narHash": "sha256-eOz1YNclUTobC2f9meWpw+idhzWImdti43OKjLBoDq8=",
+        "lastModified": 1665332696,
+        "narHash": "sha256-eBwCwoD4SU5g19/6HtbAFsnC+tle/3VkwoXo+Us6Yi8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a0edeb02ae5b92eda6efbee4e26d8c33c15063fd",
+        "rev": "50334593225d6c91723f55f31931d5e22e5068a4",
         "type": "github"
       },
       "original": {
@@ -169,11 +169,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1663661391,
-        "narHash": "sha256-jja7QQRZQ7fH9/WhdMLwT08l62Z8vWee+e+VpFy0ikA=",
+        "lastModified": 1665132027,
+        "narHash": "sha256-zoHPqSQSENt96zTk6Mt1AP+dMNqQDshXKQ4I6MfjP80=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e64df9c5c8ffa0c9a82006e410ad630e32e6063d",
+        "rev": "9ecc270f02b09b2f6a76b98488554dd842797357",
         "type": "github"
       },
       "original": {
@@ -216,17 +216,17 @@
         "slippi-desktop": "slippi-desktop"
       },
       "locked": {
-        "lastModified": 1663259091,
-        "narHash": "sha256-i155wSFtENbkjp36DPaz1RZDR9+PDhhixdAGHf8mwjA=",
+        "lastModified": 1665334201,
+        "narHash": "sha256-oWka87mnMxBvvzVAZ1chS/PjTQIcoFc9jhUQ/6bDR00=",
         "owner": "djanatyn",
         "repo": "ssbm-nix",
-        "rev": "b546467d25f1f67064fbcc27ba27d75e7c949426",
+        "rev": "24caa7ae2ac833576bd475d54778afb0b972daba",
         "type": "github"
       },
       "original": {
         "owner": "djanatyn",
+        "ref": "update/nixpkgs-git",
         "repo": "ssbm-nix",
-        "rev": "b546467d25f1f67064fbcc27ba27d75e7c949426",
         "type": "github"
       }
     },
