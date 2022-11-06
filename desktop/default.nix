@@ -156,7 +156,7 @@
 
         script = ''
           # run backup with borg
-          borg create -v --stats "${BACKUP_REPO}::$(date +%F-%T)" $NOTE_PATH
+          borg create -v --stats "$BACKUP_REPO::$(date +%F-%T)" $NOTE_PATH
 
           # upload to backblaze-b2
           export B2_APPLICATION_KEY_ID="$(systemd-creds cat backblaze-b2-key-id)"
