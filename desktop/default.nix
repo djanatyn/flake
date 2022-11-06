@@ -136,17 +136,31 @@
       };
 
       backup-notes = {
-        path = with pkgs; [ bash borgbackup coreutils ];
+        path = with pkgs; [ bash borgbackup backblaze-b2 coreutils ];
         serviceConfig = {
           Type = "oneshot";
           WorkingDirectory = "/var/lib/backups";
-          LoadCredentialEncrypted = "borg-notes:/var/lib/backups/borg-notes.creds";
+          # https://systemd.io/CREDENTIALS/
+          LoadCredentialEncrypted = [
+            "borg-notes:/var/lib/backups/borg-notes.creds"
+            "backblaze-b2-key-id:/var/lib/backups/backblaze-b2-key-id.creds"
+            "backblaze-b2-key:/var/lib/backups/backblaze-b2-key.creds"
+          ];
+          Environment = [
+            "BORG_PASSCOMMAND='systemd-creds cat borg-notes'"
+          ];
         };
 
         script = ''
-          BORG_PASSCOMMAND="systemd-creds cat borg-notes" borg create -v --stats \
-            "/home/djanatyn/backups/notes::$(date +%F-%T)" \
+          # run backup with borg
+          borg create -v --stats \
+            "/var/lib/backups/notes::$(date +%F-%T)" \
             /home/djanatyn/org-roam
+
+          # upload to backblaze-b2
+          export B2_APPLICATION_KEY_ID="$(systemd-creds cat backblaze-b2-key-id)"
+          export B2_APPLICATION_KEY="$(systemd-creds cat backblaze-b2-key)"
+          backblaze-b2 sync /home/djanatyn/backups/notes b2://djanatyn-notes/notes
         '';
       };
     };
@@ -158,6 +172,15 @@
         timerConfig = {
           OnCalendar = "*-*-* 00:00:00";
           Unit = "fetch-followers.service";
+        };
+      };
+
+      backup-notes-timer = {
+        wantedBy = [ "timers.target" ];
+        partOf = [ "backup-notes.service" ];
+        timerConfig = {
+          OnCalendar = "*-*-* 01:00:00";
+          Unit = "backup-notes.service";
         };
       };
     };
