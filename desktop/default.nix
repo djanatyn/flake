@@ -121,7 +121,6 @@
     globalEnvironment = { RADV_PERFTEST = "aco"; };
 
     services = {
-
       fetch-followers = {
         path = with pkgs; [ bash fetch-followers ];
         serviceConfig = {
@@ -135,7 +134,22 @@
         '';
       };
 
-      backup-notes = {
+      build-system = {
+        path = with pkgs; [ bash nixos-rebuild git ];
+        serviceConfig = {
+          Type = "oneshot";
+          Environment = [
+            "FLAKE=/home/djanatyn/hack/flake" # better path?
+          ];
+
+        };
+
+        script = ''
+          nixos-rebuild build --impure --flake "$FLAKE#desktop"
+        '';
+      };
+
+      run-backups = {
         path = with pkgs; [ bash borgbackup backblaze-b2 coreutils ];
         serviceConfig = {
           Type = "oneshot";
@@ -143,29 +157,50 @@
           # https://systemd.io/CREDENTIALS/
           LoadCredentialEncrypted = [
             "borg-notes:/var/lib/backups/borg-notes.creds"
+            "shell-history:/var/lib/backups/shell-history.creds"
+            "music:/var/lib/backups/music.creds"
             "backblaze-b2-key-id:/var/lib/backups/backblaze-b2-key-id.creds"
             "backblaze-b2-key:/var/lib/backups/backblaze-b2-key.creds"
           ];
           Environment = [
-            "NOTE_PATH=/home/djanatyn/org-roam"
-            "NOTE_BUCKET=b2://djanatyn-notes/notes"
-            "BORG_PASSCOMMAND='systemd-creds cat borg-notes'"
-            "BACKUP_REPO=/var/lib/backups/notes"
+            # directories to back up (mostly local SSD)
+            "NOTES=/home/djanatyn/org-roam"
+            "SHELL_HISTORY=/home/djanatyn/.zsh_history"
+            "MUSIC=/home/djanatyn/music"
+            # backblaze b2 buckets (cloud)
+            "NOTES_BUCKET=b2://djanatyn-notes/notes"
+            "SHELL_HISTORY_BUCKET=b2://djanatyn-shell-history/shell-history"
+            "MUSIC_BUCKET=b2://djanatyn-music/music"
+            # borg repositories (NAS)
+            "NOTES_REPO=/archive/notes"
+            "SHELL_HISTORY_REPO=/archive/shell-history"
+            "MUSIC_REPO=/archive/music"
           ];
         };
 
         script = ''
-          # run backup with borg
-          borg create -v --stats "$BACKUP_REPO::$(date +%F-%T)" $NOTE_PATH
+          # run backups with borg
+          BORG_PASSCOMMAND='systemd-creds cat borg-notes' \
+            borg create -v --stats "$NOTES_REPO::automated-$(date +%F-%T)" $NOTES
+          BORG_PASSCOMMAND='systemd-creds cat shell-history' \
+            borg create -v --stats "$SHELL_HISTORY_REPO::automated-$(date +%F-%T)" $SHELL_HISTORY
+          BORG_PASSCOMMAND='systemd-creds cat music' \
+            borg create -v --stats "$MUSIC_REPO::automated-$(date +%F-%T)" $MUSIC
+
+          # TODO: what other backups?
+          # - ~/hack directory
 
           # upload to backblaze-b2
           export B2_APPLICATION_KEY_ID="$(systemd-creds cat backblaze-b2-key-id)"
           export B2_APPLICATION_KEY="$(systemd-creds cat backblaze-b2-key)"
-          backblaze-b2 sync $BACKUP_REPO $NOTE_BUCKET
+          backblaze-b2 sync $NOTES_REPO $NOTES_BUCKET
+          backblaze-b2 sync $SHELL_HISTORY_REPO $SHELL_HISTORY_BUCKET
+          backblaze-b2 sync $MUSIC_REPO $MUSIC_BUCKET
         '';
       };
     };
 
+    # TODO: add mbsync creds + job + timer
     timers = {
       fetch-followers-timers = {
         wantedBy = [ "timers.target" ];
@@ -176,12 +211,21 @@
         };
       };
 
-      backup-notes-timer = {
+      run-backups-timer = {
         wantedBy = [ "timers.target" ];
-        partOf = [ "backup-notes.service" ];
+        partOf = [ "run-backups.service" ];
         timerConfig = {
           OnCalendar = "*-*-* 01:00:00";
-          Unit = "backup-notes.service";
+          Unit = "run-backups.service";
+        };
+      };
+
+      build-system-timer = {
+        wantedBy = [ "timers.target" ];
+        partOf = [ "build-system.service" ];
+        timerConfig = {
+          OnCalendar = "*-*-* 02:00:00";
+          Unit = "build-system.service";
         };
       };
     };
