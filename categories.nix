@@ -2,6 +2,8 @@
 with pkgs; {
   system = [
     # tools you can't live without
+    borgbackup
+    bcc
     bpftrace
     duc
     direnv
