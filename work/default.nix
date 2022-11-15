@@ -162,7 +162,8 @@
 
   environment.systemPackages = with (import ../categories.nix { inherit pkgs; });
     builtins.concatLists [
-      # desktop NixOS box
+      # oso hq laptop
+      work
       system
       virtualisation
 

@@ -1,5 +1,13 @@
 { pkgs }:
 with pkgs; {
+  # oso hq
+  work = [
+    yubikey-manager
+    yubikey-manager-qt
+    google-chrome
+    xbindkeys
+  ];
+
   system = [
     # tools you can't live without
     borgbackup
