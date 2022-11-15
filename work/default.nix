@@ -1,47 +1,54 @@
 { config, pkgs, nixpkgs, ... }: {
   imports = [
-    ./hardware-configuration.nix
     ../cachix.nix
   ];
   system.stateVersion = "22.05";
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = false;
-
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    devices = ["nodev"];
-    copyKernels = true;
-    efiInstallAsRemovable = true;
-    useOSProber = true;
-  };
-
-  # boot.loader.systemd-boot.configurationLimit = 42;
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+  boot.initrd.luks.devices = { root = { device = "/dev/nvme0n1p2"; preLVM = true; }; };
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
-  boot.loader.efi.efiSysMountPoint = "/boot2/efi";
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/d51f31dc-ad76-42a5-8b32-753a934e865e";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/5F1A-EF92";
+      fsType = "vfat";
+    };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/a5be0c90-cb07-41fe-816d-b9d1e3808d33"; }
+    ];
+
+  powerManagement.cpuFreqGovernor = "powersave";
+  hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
 
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/New_York";
 
   nixpkgs.config.allowUnfree = true;
-
   nix = {
     settings.sandbox = true;
     optimise.automatic = true;
     gc.automatic = true;
-    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
 
-  users.users.jstrickland = {
+  users.users.djanatyn = {
     isNormalUser = true;
     description = "Jonathan Strickland";
+    group = "users";
     extraGroups =
-      [ "wheel" "networkmanager" "docker" "video" "audio" "adb" ];
-    packages = with pkgs; [];
+      [ "wheel" "networkmanager" "docker" "video" "disk" "audio" "adb" ];
     shell = "${pkgs.zsh}/bin/zsh";
   };
 
@@ -74,11 +81,9 @@
   };
 
   networking = {
+    hostName = "djan-oso"; # Define your hostname.
     nameservers = [ "8.8.8.8" ];
     networkmanager.enable = true;
-    networkmanager.dns = "systemd-resolved";
-    hostName = "jon-metafy";
-
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 8080 8096 ];
@@ -113,24 +118,13 @@
     }
   ];
 
-  services.resolved.fallbackDns = [ "8.8.8.8" ];
-
   services = {
     xserver = {
       enable = true;
-      synaptics.enable = true;
+      desktopManager.gnome.enable = true;
+      displayManager.gdm.enable = true;
       layout = "us";
       xkbOptions = "ctrl:nocaps";
-
-      displayManager.defaultSession = "none+i3";
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [
-          dmenu
-          i3status
-          i3lock
-        ];
-      };
     };
 
     avahi = {
@@ -143,9 +137,11 @@
       };
     };
 
+    tailscale.enable = true;
+
     openssh.enable = true;
-    lorri.enable = true;
     blueman.enable = true;
+    pcscd.enable = true;
   };
 
   security = {
@@ -156,8 +152,12 @@
     adb.enable = true;
     browserpass.enable = true;
     mtr.enable = true;
-    sysdig.enable = true;
     bandwhich.enable = true;
+    gnupg.agent = {
+      enable = true;
+      pinentryFlavor = "gtk2";
+      enableSSHSupport = true;
+    };
   };
 
   environment.systemPackages = with (import ../categories.nix { inherit pkgs; });
@@ -192,12 +192,10 @@
       # languages
       haskell
       java
-      dhall
       python
       erlang
       zig
       deno
-      ponylang
 
       # internet
       network
@@ -213,7 +211,6 @@
 
       # social
       chat
-      streaming
 
       # ui
       xorg
