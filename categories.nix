@@ -6,6 +6,7 @@ with pkgs; {
     yubikey-manager-qt
     google-chrome
     xbindkeys
+    zenity
   ];
 
   system = [
