@@ -6,7 +6,10 @@ with pkgs; {
     yubikey-manager-qt
     google-chrome
     xbindkeys
-    zenity
+    gnome.zenity
+
+    # jira!
+    go-jira
   ];
 
   system = [
@@ -538,15 +541,6 @@ with pkgs; {
     terraform
     packer
     nomad
-  ];
-
-  work = [
-    # ansible...
-    ansible
-    ansible-lint
-
-    # jira!
-    go-jira
   ];
 
   organization = [

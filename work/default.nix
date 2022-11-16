@@ -121,11 +121,22 @@
   services = {
     xserver = {
       enable = true;
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.enable = true;
+      synaptics.enable = true;
       layout = "us";
       xkbOptions = "ctrl:nocaps";
+
+      displayManager.defaultSession = "none+i3";
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu
+          i3status
+          i3lock
+        ];
+      };
     };
+
+    postgresql.enable = true;
 
     avahi = {
       enable = true;
