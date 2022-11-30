@@ -37,7 +37,7 @@
   nix = {
     settings.sandbox = true;
     optimise.automatic = true;
-    gc.automatic = true;
+    gc.automatic = false;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
