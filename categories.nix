@@ -15,11 +15,11 @@ with pkgs; {
     peek
 
     # infra
-    pulumi
+    pulumi-bin
     awscli2
 
     # typescript / node
-    npmjs
+    nodejs
   ];
 
   system = [
