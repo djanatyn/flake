@@ -10,6 +10,16 @@ with pkgs; {
 
     # jira!
     go-jira
+
+    # screenshots + video
+    peek
+
+    # infra
+    pulumi
+    awscli2
+
+    # typescript / node
+    npmjs
   ];
 
   system = [
