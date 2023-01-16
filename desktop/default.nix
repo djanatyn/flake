@@ -280,7 +280,7 @@
   };
 
   # enable grafana with default settings
-  services.grafana.enable = true;
+  # services.grafana.enable = true; TODO: fix grafana
 
   # enable prometheus with node exporter
   services.prometheus.enable = true;
@@ -342,23 +342,12 @@
       };
     };
 
-    dnsmasq = {
-      enable = false;
-      servers = [ "8.8.8.8" ];
-      extraConfig = ''
-        strict-order
-        no-resolv
-        log-queries
-      '';
-    };
-
     udev.extraRules = ''
       # gamecube wii u usb adapter
       ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0337", MODE="666", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device" TAG+="uaccess"
 
       # tomu: https://github.com/im-tomu/chopstx/tree/efm32/u2f#update-udev-rules
       ACTION=="add|change", KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="cdab", TAG+="uaccess"
-
     '';
 
     syncthing = {

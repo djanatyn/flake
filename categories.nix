@@ -448,7 +448,7 @@ with pkgs; {
     retroarch
 
     # minecraft
-    polymc
+    prismlauncher
 
     # puzzles
     sgtpuzzles
@@ -555,7 +555,7 @@ with pkgs; {
 
   organization = [
     # document archival
-    wkhtmltopdf
+    # wkhtmltopdf TODO: qtwebkit unmaintained :(
   ];
 
   python = [
