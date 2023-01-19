@@ -460,9 +460,9 @@ with pkgs; {
     runelite
 
     # super smash bros melee
-    slippi-netplay
+    # slippi-netplay
     # slippi-playback
-    netplay2021
+    # netplay2021
     appimage-p-plus
     p-plus
 
