@@ -150,6 +150,34 @@
       };
 
       run-backups = {
+        # to initialize a backup repository:
+        # 1. generate a password
+        # $ pass generate backups/music/password
+        #
+        # 2. initialize borg repository
+        # $ BORG_PASSCOMMAND="pass show backups/music/password" \
+        #   borg init -e repokey /archive/music
+        #
+        # 3. store password + repokey with systemd-creds
+        # $ pass show backups/music/password | sudo systemd-creds encrypt --name=music - /var/lib/backups/music.creds
+        # $ borg key export /archive/shell-history | pass insert -m backups/shell-history/borg-key
+        #
+        # 4. run initial backup:
+        # $ BORG_PASSCOMMAND="pass show backups/music/password" \
+        #   borg create -v --stats "/archive/music::initial backup" ~/music
+        #
+        # 5. create backblaze bucket
+        # $ backblaze-b2 create-bucket djanatyn-shell-history allPrivate
+        #
+        # 6. add location of credential to LoadCredentialEncrypted:
+        # "music:/var/lib/backups/music.creds"
+        #
+        # 7. specify directory to backup, backblaze bucket, and backup location
+        # "MUSIC=/home/djanatyn/music"
+        # "MUSIC_BUCKET=b2://djanatyn-music/music"
+        # "MUSIC_REPO=/archive/music"
+        #
+        # 8. add appropriate borg create + backblaze-b2 sync commands to script
         path = with pkgs; [ bash borgbackup backblaze-b2 coreutils ];
         serviceConfig = {
           Type = "oneshot";
