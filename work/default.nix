@@ -125,14 +125,11 @@
       layout = "us";
       xkbOptions = "ctrl:nocaps";
 
-      displayManager.defaultSession = "none+i3";
-      windowManager.i3 = {
+      displayManager.defaultSession = "none+xmonad";
+      desktopManager.xterm.enable = false;
+      windowManager.xmonad = {
         enable = true;
-        extraPackages = with pkgs; [
-          dmenu
-          i3status
-          i3lock
-        ];
+        enableContribAndExtras = true;
       };
     };
 
