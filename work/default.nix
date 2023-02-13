@@ -126,7 +126,13 @@
 
     tailscale.enable = true;
 
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
     blueman.enable = true;
     pcscd.enable = true;
   };
