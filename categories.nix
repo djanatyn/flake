@@ -20,6 +20,23 @@ with pkgs; {
 
     # typescript / node
     nodejs
+
+    # backlight
+    light
+
+    # screenlock, visuals
+    xlockmore
+    xscreensaver
+    xwinwrap
+
+    # battery
+    acpi
+
+    # http tests
+    hey
+
+    # formatting
+    pandoc
   ];
 
   system = [
