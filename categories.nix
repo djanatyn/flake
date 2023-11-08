@@ -535,7 +535,7 @@ with pkgs; {
     zoom-us
 
     # testing
-    fetch-followers
+    # fetch-followers
 
     # graphic editing
     mtpaint

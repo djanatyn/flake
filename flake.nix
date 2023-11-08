@@ -35,7 +35,7 @@
       '';
 
       appimage-p-plus = final.appimageTools.wrapAppImage {
-        src = /home/djanatyn/p-plus/Faster_Project_Plus-x86-64.AppImage;
+        src = /home/djanatyn/p-plus/Faster_Project_Plus-x86-64-2.28.AppImage;
         name = "appimage-p-plus";
         extraPkgs = pkgs: with pkgs; [ wrapGAppsHook gtk3 gmp vulkan-loader mesa.drivers mesa_glu mesa ];
       };

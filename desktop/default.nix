@@ -121,19 +121,6 @@
     globalEnvironment = { RADV_PERFTEST = "aco"; };
 
     services = {
-      fetch-followers = {
-        path = with pkgs; [ bash fetch-followers ];
-        serviceConfig = {
-          Type = "oneshot";
-          WorkingDirectory = "/var/db/fetch-followers";
-          EnvironmentFile = "/var/db/fetch-followers/secrets";
-        };
-
-        script = ''
-          fetch-followers
-        '';
-      };
-
       build-system = {
         path = with pkgs; [ bash nixos-rebuild git ];
         serviceConfig = {
@@ -230,15 +217,6 @@
 
     # TODO: add mbsync creds + job + timer
     timers = {
-      fetch-followers-timers = {
-        wantedBy = [ "timers.target" ];
-        partOf = [ "fetch-followers.service" ];
-        timerConfig = {
-          OnCalendar = "*-*-* 00:00:00";
-          Unit = "fetch-followers.service";
-        };
-      };
-
       run-backups-timer = {
         wantedBy = [ "timers.target" ];
         partOf = [ "run-backups.service" ];
@@ -302,7 +280,7 @@
   services.openssh = {
     enable = true;
     listenAddresses = [{
-      addr = "100.86.113.81";
+      addr = "0.0.0.0";
       port = 22;
     }];
   };
@@ -410,6 +388,7 @@
     enable = true;
     mediaKeys.enable = true;
   };
+
 
   environment.systemPackages =
     with (import ../categories.nix { inherit pkgs; });
