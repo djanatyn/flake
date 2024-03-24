@@ -72,7 +72,7 @@ with pkgs; {
     bat
     mdcat
     procs
-    exa
+    eza # exa fork
 
     # timer!
     termdown
@@ -145,7 +145,7 @@ with pkgs; {
     nix-prefetch-scripts
 
     # packaging
-    python38Packages.python-slugify
+    python312Packages.python-slugify
 
     # format code
     nixfmt
@@ -468,7 +468,7 @@ with pkgs; {
     prismlauncher
 
     # puzzles
-    sgtpuzzles
+    sgt-puzzles
 
     # quake
     quakespasm
@@ -546,7 +546,7 @@ with pkgs; {
     ueberzug
 
     # twitter + mastodon
-    python38Packages.rainbowstream
+    # python312Packages.rainbowstream
     toot
 
     # music managements

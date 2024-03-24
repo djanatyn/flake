@@ -126,7 +126,7 @@
     consul
     nomad
     vim
-    exa
+    eza
     git
     python
     tmux

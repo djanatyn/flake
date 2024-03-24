@@ -53,7 +53,6 @@
     loader = {
       grub = {
         enable = true;
-        version = 2;
         efiSupport = true;
         efiInstallAsRemovable = true;
         device = "nodev";
@@ -315,8 +314,8 @@
       enable = true;
       videoDrivers = [ "amdgpu" ];
 
-      layout = "us";
-      xkbOptions = "ctrl:nocaps";
+      xkb.layout = "us";
+      xkb.options = "ctrl:nocaps";
 
       displayManager.defaultSession = "none+xmonad";
       desktopManager.xterm.enable = false;
@@ -340,7 +339,7 @@
 
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       publish = {
         enable = true;
         addresses = true;
@@ -373,7 +372,7 @@
 
   security = {
     sudo.wheelNeedsPassword = false;
-    pam.enableSSHAgentAuth = true;
+    pam.sshAgentAuth.enable = true;
   };
 
   programs = {
@@ -437,7 +436,7 @@
       erlang
       zig
       deno
-      ponylang
+      # ponylang
 
       # internet
       network
