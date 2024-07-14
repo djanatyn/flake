@@ -129,7 +129,7 @@ with pkgs; {
   study = [
     # track documents
     zotero
-    papis
+    # papis
   ];
 
   transform = [
@@ -553,7 +553,7 @@ with pkgs; {
     beets
 
     # backups
-    backblaze-b2
+    # backblaze-b2
 
     # firmware flashing
     gcc-arm-embedded

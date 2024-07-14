@@ -135,83 +135,83 @@
         '';
       };
 
-      run-backups = {
-        # to initialize a backup repository:
-        # 1. generate a password
-        # $ pass generate backups/music/password
-        #
-        # 2. initialize borg repository
-        # $ BORG_PASSCOMMAND="pass show backups/music/password" \
-        #   borg init -e repokey /archive/music
-        #
-        # 3. store password + repokey with systemd-creds
-        # $ pass show backups/music/password | sudo systemd-creds encrypt --name=music - /var/lib/backups/music.creds
-        # $ borg key export /archive/shell-history | pass insert -m backups/shell-history/borg-key
-        #
-        # 4. run initial backup:
-        # $ BORG_PASSCOMMAND="pass show backups/music/password" \
-        #   borg create -v --stats "/archive/music::initial backup" ~/music
-        #
-        # 5. create backblaze bucket
-        # $ backblaze-b2 create-bucket djanatyn-shell-history allPrivate
-        #
-        # 6. add location of credential to LoadCredentialEncrypted:
-        # "music:/var/lib/backups/music.creds"
-        #
-        # 7. specify directory to backup, backblaze bucket, and backup location
-        # "MUSIC=/home/djanatyn/music"
-        # "MUSIC_BUCKET=b2://djanatyn-music/music"
-        # "MUSIC_REPO=/archive/music"
-        #
-        # 8. add appropriate borg create + backblaze-b2 sync commands to script
-        path = with pkgs; [ bash borgbackup backblaze-b2 coreutils ];
-        serviceConfig = {
-          Type = "oneshot";
-          WorkingDirectory = "/var/lib/backups";
-          # https://systemd.io/CREDENTIALS/
-          LoadCredentialEncrypted = [
-            "borg-notes:/var/lib/backups/borg-notes.creds"
-            "shell-history:/var/lib/backups/shell-history.creds"
-            "music:/var/lib/backups/music.creds"
-            "backblaze-b2-key-id:/var/lib/backups/backblaze-b2-key-id.creds"
-            "backblaze-b2-key:/var/lib/backups/backblaze-b2-key.creds"
-          ];
-          Environment = [
-            # directories to back up (mostly local SSD)
-            "NOTES=/home/djanatyn/org-roam"
-            "SHELL_HISTORY=/home/djanatyn/.zsh_history"
-            "MUSIC=/home/djanatyn/music"
-            # backblaze b2 buckets (cloud)
-            "NOTES_BUCKET=b2://djanatyn-notes/notes"
-            "SHELL_HISTORY_BUCKET=b2://djanatyn-shell-history/shell-history"
-            "MUSIC_BUCKET=b2://djanatyn-music/music"
-            # borg repositories (NAS)
-            "NOTES_REPO=/archive/notes"
-            "SHELL_HISTORY_REPO=/archive/shell-history"
-            "MUSIC_REPO=/archive/music"
-          ];
-        };
+      # run-backups = {
+      #   # to initialize a backup repository:
+      #   # 1. generate a password
+      #   # $ pass generate backups/music/password
+      #   #
+      #   # 2. initialize borg repository
+      #   # $ BORG_PASSCOMMAND="pass show backups/music/password" \
+      #   #   borg init -e repokey /archive/music
+      #   #
+      #   # 3. store password + repokey with systemd-creds
+      #   # $ pass show backups/music/password | sudo systemd-creds encrypt --name=music - /var/lib/backups/music.creds
+      #   # $ borg key export /archive/shell-history | pass insert -m backups/shell-history/borg-key
+      #   #
+      #   # 4. run initial backup:
+      #   # $ BORG_PASSCOMMAND="pass show backups/music/password" \
+      #   #   borg create -v --stats "/archive/music::initial backup" ~/music
+      #   #
+      #   # 5. create backblaze bucket
+      #   # $ backblaze-b2 create-bucket djanatyn-shell-history allPrivate
+      #   #
+      #   # 6. add location of credential to LoadCredentialEncrypted:
+      #   # "music:/var/lib/backups/music.creds"
+      #   #
+      #   # 7. specify directory to backup, backblaze bucket, and backup location
+      #   # "MUSIC=/home/djanatyn/music"
+      #   # "MUSIC_BUCKET=b2://djanatyn-music/music"
+      #   # "MUSIC_REPO=/archive/music"
+      #   #
+      #   # 8. add appropriate borg create + backblaze-b2 sync commands to script
+      #   path = with pkgs; [ bash borgbackup backblaze-b2 coreutils ];
+      #   serviceConfig = {
+      #     Type = "oneshot";
+      #     WorkingDirectory = "/var/lib/backups";
+      #     # https://systemd.io/CREDENTIALS/
+      #     LoadCredentialEncrypted = [
+      #       "borg-notes:/var/lib/backups/borg-notes.creds"
+      #       "shell-history:/var/lib/backups/shell-history.creds"
+      #       "music:/var/lib/backups/music.creds"
+      #       "backblaze-b2-key-id:/var/lib/backups/backblaze-b2-key-id.creds"
+      #       "backblaze-b2-key:/var/lib/backups/backblaze-b2-key.creds"
+      #     ];
+      #     Environment = [
+      #       # directories to back up (mostly local SSD)
+      #       "NOTES=/home/djanatyn/org-roam"
+      #       "SHELL_HISTORY=/home/djanatyn/.zsh_history"
+      #       "MUSIC=/home/djanatyn/music"
+      #       # backblaze b2 buckets (cloud)
+      #       "NOTES_BUCKET=b2://djanatyn-notes/notes"
+      #       "SHELL_HISTORY_BUCKET=b2://djanatyn-shell-history/shell-history"
+      #       "MUSIC_BUCKET=b2://djanatyn-music/music"
+      #       # borg repositories (NAS)
+      #       "NOTES_REPO=/archive/notes"
+      #       "SHELL_HISTORY_REPO=/archive/shell-history"
+      #       "MUSIC_REPO=/archive/music"
+      #     ];
+      #   };
 
-        script = ''
-          # run backups with borg
-          BORG_PASSCOMMAND='systemd-creds cat borg-notes' \
-            borg create -v --stats "$NOTES_REPO::automated-$(date +%F-%T)" $NOTES
-          BORG_PASSCOMMAND='systemd-creds cat shell-history' \
-            borg create -v --stats "$SHELL_HISTORY_REPO::automated-$(date +%F-%T)" $SHELL_HISTORY
-          BORG_PASSCOMMAND='systemd-creds cat music' \
-            borg create -v --stats "$MUSIC_REPO::automated-$(date +%F-%T)" $MUSIC
+      #   script = ''
+      #     # run backups with borg
+      #     BORG_PASSCOMMAND='systemd-creds cat borg-notes' \
+      #       borg create -v --stats "$NOTES_REPO::automated-$(date +%F-%T)" $NOTES
+      #     BORG_PASSCOMMAND='systemd-creds cat shell-history' \
+      #       borg create -v --stats "$SHELL_HISTORY_REPO::automated-$(date +%F-%T)" $SHELL_HISTORY
+      #     BORG_PASSCOMMAND='systemd-creds cat music' \
+      #       borg create -v --stats "$MUSIC_REPO::automated-$(date +%F-%T)" $MUSIC
 
-          # TODO: what other backups?
-          # - ~/hack directory
+      #     # TODO: what other backups?
+      #     # - ~/hack directory
 
-          # upload to backblaze-b2
-          export B2_APPLICATION_KEY_ID="$(systemd-creds cat backblaze-b2-key-id)"
-          export B2_APPLICATION_KEY="$(systemd-creds cat backblaze-b2-key)"
-          backblaze-b2 sync $NOTES_REPO $NOTES_BUCKET
-          backblaze-b2 sync $SHELL_HISTORY_REPO $SHELL_HISTORY_BUCKET
-          backblaze-b2 sync $MUSIC_REPO $MUSIC_BUCKET
-        '';
-      };
+      #     # upload to backblaze-b2
+      #     export B2_APPLICATION_KEY_ID="$(systemd-creds cat backblaze-b2-key-id)"
+      #     export B2_APPLICATION_KEY="$(systemd-creds cat backblaze-b2-key)"
+      #     backblaze-b2 sync $NOTES_REPO $NOTES_BUCKET
+      #     backblaze-b2 sync $SHELL_HISTORY_REPO $SHELL_HISTORY_BUCKET
+      #     backblaze-b2 sync $MUSIC_REPO $MUSIC_BUCKET
+      #   '';
+      # };
     };
 
     # TODO: add mbsync creds + job + timer
@@ -322,6 +322,7 @@
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        config = builtins.readFile ./xmonad.hs;
       };
     };
 
@@ -379,7 +380,7 @@
     adb.enable = true;
     browserpass.enable = true;
     mtr.enable = true;
-    sysdig.enable = true;
+    sysdig.enable = false;
     bandwhich.enable = true;
   };
 

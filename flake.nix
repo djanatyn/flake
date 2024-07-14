@@ -60,7 +60,13 @@
     nixosConfigurations = let
       pkgs = import nixpkgs {
         overlays = [ self.overlay ssbm-nix.overlay emacs.overlay ];
-        config = { allowUnfree = true; };
+        config = {
+          allowUnfree = true;
+          # TODO remove
+          permittedInsecurePackages = [
+            "freeimage-unstable-2021-11-01"
+          ];
+        };
       };
     in {
       desktop = nixpkgs.lib.nixosSystem {
