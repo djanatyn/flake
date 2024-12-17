@@ -148,7 +148,7 @@ with pkgs; {
     python312Packages.python-slugify
 
     # format code
-    nixfmt
+    nixfmt-classic
 
     # build binaries
     patchelf
@@ -221,7 +221,6 @@ with pkgs; {
   chat = [
     # chat clients
     discord
-    neochat
 
     # twitch
     chatterino2
@@ -285,7 +284,7 @@ with pkgs; {
     qbittorrent-nox
 
     # straight from the source
-    youtube-dl
+    yt-dlp
     ytcc
   ];
 
@@ -340,7 +339,7 @@ with pkgs; {
     jacinda
 
     # prolog
-    swiProlog
+    swi-prolog
 
     # run things
     entr

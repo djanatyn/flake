@@ -94,22 +94,9 @@
   hardware = {
     enableRedistributableFirmware = true;
 
+    graphics.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     opengl = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-    };
-
-    pulseaudio = {
-      enable = true;
-      # extraModules = [ pkgs.pulseaudio-modules-bt ];
-      package = pkgs.pulseaudioFull;
-      support32Bit = true;
-      configFile = pkgs.runCommand "default.pa" { } ''
-        sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
-          ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
-      '';
     };
 
     bluetooth.enable = true;
@@ -310,6 +297,7 @@
   ];
 
   services = {
+    displayManager.defaultSession = "none+xmonad";
     xserver = {
       enable = true;
       videoDrivers = [ "amdgpu" ];
@@ -317,7 +305,7 @@
       xkb.layout = "us";
       xkb.options = "ctrl:nocaps";
 
-      displayManager.defaultSession = "none+xmonad";
+
       desktopManager.xterm.enable = false;
       windowManager.xmonad = {
         enable = true;
@@ -382,11 +370,6 @@
     mtr.enable = true;
     sysdig.enable = false;
     bandwhich.enable = true;
-  };
-
-  sound = {
-    enable = true;
-    mediaKeys.enable = true;
   };
 
   services.logind.extraConfig = ''
