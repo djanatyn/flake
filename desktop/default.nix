@@ -93,13 +93,11 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-
-    graphics.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-    opengl = {
-      enable = true;
-    };
-
     bluetooth.enable = true;
+    graphics = {
+      enable = true;
+      extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
+    };
   };
 
   systemd = {
