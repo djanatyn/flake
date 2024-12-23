@@ -262,7 +262,7 @@ with pkgs; {
 
   editor = [
     # emacs + tmux is powerful
-    emacsGit
+    emacs-git
 
     # best of both worlds
     neovim
@@ -452,7 +452,7 @@ with pkgs; {
     # steam + lutris
     wine
     wine64
-    (steam.override { extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ]; })
+    (steam.override { extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai xorg.libxcb ]; })
     steam-run
     lutris
 

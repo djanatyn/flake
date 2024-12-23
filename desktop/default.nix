@@ -96,6 +96,8 @@
     bluetooth.enable = true;
     graphics = {
       enable = true;
+
+
       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
     };
   };
@@ -368,7 +370,20 @@
     mtr.enable = true;
     sysdig.enable = false;
     bandwhich.enable = true;
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+      protontricks.enable = true;
+      extraCompatPackages = with pkgs; [ proton-ge-bin ];
+      extraPackages = with pkgs; [
+        mangohud
+        gamemode
+        dotnet-sdk_8
+      ];
+    };
+    gamemode.enable = true;
   };
+
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
