@@ -22,6 +22,7 @@ import XMonad.Hooks.WorkspaceHistory ()
 import XMonad.Layout.Gaps
 import XMonad.Layout.Column
 import XMonad.Layout.Grid
+import XMonad.Layout.SimpleFloat
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Roledex
 import XMonad.Layout.Spacing (Border (..), spacingRaw)
@@ -147,7 +148,7 @@ column = Column (10 / 7)
 
 mediaLayout = Column 3
 
-defaultLayout = tall ||| Full ||| column ||| ThreeCol 1 (3/100) (1/2)
+defaultLayout = tall ||| Full ||| column ||| ThreeCol 1 (3/100) (1/2) ||| simpleFloat
 
 myLayout =
   avoidStruts $ spacing $ gaps' [((L, 400), True), ((R, 400), True)] defaultLayout
