@@ -173,7 +173,7 @@ myFadeHook =
 startupProcs :: [String]
 startupProcs =
   [ "nitrogen --restore",
-    "picom",
+    "picom --backend glx",
     "~/.screenlayouts/default.sh",
     "fluxgui"
   ]
